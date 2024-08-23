@@ -17,13 +17,11 @@ public interface UserDao {
 
     List<User> read();
 
-    ResponseEntity<List<User>> readAPI();
 
-    User update(long id, String name, String lastname, long age, String mail, String password, Collection<Long> role);
+
 
     User update(User user, Collection<Role> role);
 
-    User update(User user);
 
     void delete(long id);
 

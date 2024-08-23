@@ -15,13 +15,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin")
-public class AdminControllerREST {
+public class AdminControllerRest {
 
     private final UserService userService;
     private final RoleService roleService;
 
 
-    public AdminControllerREST(UserService userService, RoleService roleService) {
+    public AdminControllerRest(UserService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
 
@@ -30,8 +30,8 @@ public class AdminControllerREST {
 
     @GetMapping
     public ResponseEntity<List<User>> allUsers() {
-        List<User> list = userService.read();
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        //List<User> list = userService.read();
+        return new ResponseEntity<>(userService.read(), HttpStatus.OK);
     }
 
     @GetMapping("/auth")
@@ -47,17 +47,15 @@ public class AdminControllerREST {
 
     @PostMapping
     public ResponseEntity<User> addUser(@RequestBody DTO dto) {
-
-        User newUser = dto.getUser();
         userService.createUser(dto.getUser(), dto.getRoles());
-        return new ResponseEntity<>(newUser, HttpStatus.OK);
+        return new ResponseEntity<>(dto.getUser(), HttpStatus.OK);
     }
 
     @PutMapping
     public ResponseEntity<User> updateUser(@RequestBody DTO dto) {
 
-        User upUser = userService.update(dto.getUser(), dto.getRoles());
-        return new ResponseEntity<>(upUser, HttpStatus.OK);
+        //User upUser = userService.update(dto.getUser(), dto.getRoles());
+        return new ResponseEntity<>(userService.update(dto.getUser(), dto.getRoles()), HttpStatus.OK);
     }
 
 
@@ -68,8 +66,8 @@ public class AdminControllerREST {
 
     @GetMapping("/roles")
     public ResponseEntity<Collection<Role>> getAllRoles() {
-        Collection<Role> roles = roleService.getAllRoles();
-        return new ResponseEntity<>(roles, HttpStatus.OK);
+        //Collection<Role> roles = roleService.getAllRoles();
+        return new ResponseEntity<>(roleService.getAllRoles(), HttpStatus.OK);
     }
 
 }

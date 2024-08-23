@@ -72,11 +72,7 @@ public class UserServiceImp implements UserService {
         return userDao.read();
     }
 
-    @Override
-    @Transactional
-    public ResponseEntity<List<User>> readAPI() {
-        return userDao.readAPI();
-    }
+
 
     @Override
     @Transactional
@@ -89,11 +85,7 @@ public class UserServiceImp implements UserService {
         userDao.delete(id);
     }
 
-    @Override
-    @Transactional
-    public User update(long id, String name, String lastname, long age, String mail, String password, Collection<Long> role) {
-        return userDao.update(id, name, lastname, age, mail, password, role);
-    }
+
 
     @Override
     @Transactional
@@ -101,11 +93,6 @@ public class UserServiceImp implements UserService {
         return userDao.update(user, role);
     }
 
-    @Override
-    @Transactional
-    public User update(User user) {
-        return userDao.update(user);
-    }
 
     @Override
     public User upPage(long id) {

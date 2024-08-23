@@ -25,7 +25,7 @@ import java.util.List;
 public class UserDaoImp implements UserDao {
 
     private final RoleService roleService;
-    @Autowired
+
     public UserDaoImp(RoleService roleService) {
         this.roleService = roleService;
 
@@ -96,33 +96,9 @@ public class UserDaoImp implements UserDao {
 
     }
 
-    public ResponseEntity<List<User>> readAPI() {
-        List<User> list = entityManager.createQuery("from User").getResultList();
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
 
-    @Override
-    @Transactional
-    public User update(long id, String name, String lastname, long age, String mail, String password, Collection<Long> role) {
-        User user = entityManager.find(User.class, id);
-        if (user != null) {
-            user.setName(name);
-            user.setLastName(lastname);
-            user.setAge(age);
-            user.setEmail(mail);
-            if (!password.equals(user.getPassword())){
-                String encoderPass = passwordEncoder().encode(password);
-                user.setPassword(encoderPass);
-            }
-            Collection<Role> list = new ArrayList<>();
-            for (Long num : role) {
-                list.addAll(roleService.getRoleById(Collections.singleton(num)));
-            }
-            user.setRoles(list);
-            entityManager.merge(user);
-        }
-        return user;
-    }
+
+
 
     @Override
     @Transactional
@@ -130,37 +106,15 @@ public class UserDaoImp implements UserDao {
         User userFind = entityManager.find(User.class, user.getId());
 
         if (userFind != null) {
-            userFind.setName(user.getName());
-            userFind.setLastName(user.getLastName());
-            userFind.setAge(user.getAge());
-            userFind.setEmail(user.getEmail());
-            String encoderPass = passwordEncoder().encode(userFind.getPassword());
-            userFind.setPassword(encoderPass);
-            userFind.setRoles(role);
-            entityManager.merge(userFind);
+
+            entityManager.merge(user);
         } else {
             throw new RuntimeException("User not found");
         }
         return userFind;
     }
 
-    @Override
-    @Transactional
-    public User update(User user) {
-        User userFind = entityManager.find(User.class, user.getId());
 
-        if (userFind != null) {
-            userFind.setName(user.getName());
-            userFind.setLastName(user.getLastName());
-            userFind.setAge(user.getAge());
-            userFind.setEmail(user.getEmail());
-            String encoderPass = passwordEncoder().encode(userFind.getPassword());
-            userFind.setPassword(encoderPass);
-            userFind.setRoles(user.getRoles());
-            entityManager.merge(userFind);
-        }
-        return userFind;
-    }
 
     @Override
     public User upPage(long id) {

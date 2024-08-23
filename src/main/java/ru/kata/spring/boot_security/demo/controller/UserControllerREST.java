@@ -9,9 +9,9 @@ import ru.kata.spring.boot_security.demo.entities.User;
 
 @RestController
 @RequestMapping("/user")
-public class UserControllerREST {
+public class UserControllerRest {
 
-    public UserControllerREST() {
+    public UserControllerRest() {
     }
 
     @GetMapping("/auth")
